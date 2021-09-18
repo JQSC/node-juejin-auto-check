@@ -1,22 +1,6 @@
 const axios = require('axios');
-const dayjs = require('dayjs');
-const chalk = require('chalk');
-const fs = require('fs');
-const configPath = './config.json';
-
-// 打印
-const log = (message, isError = false) => {
-    if (isError) {
-        console.log(chalk.red(dayjs().format('YYYY-MM-DD HH:mm:ss'), message));
-    } else {
-        console.log(chalk.blue(dayjs().format('YYYY-MM-DD HH:mm:ss'), message));
-    }
-}
-
-// 获取配置
-const getConfig = () => {
-    return JSON.parse(fs.readFileSync(configPath));
-}
+const {log, getConfig} = require('./util.js');
+const {sendEmailFromQQ} = require('./email.js')
 
 // 获取今天免费抽奖的次数
 const getTodayDrawStatus = async () => {
@@ -40,6 +24,9 @@ const draw = async () => {
 const getTodayCheckStatus = async () => {
     const {cookie, baseUrl, apiUrl} = getConfig();
     let {data} = await axios({url: baseUrl + apiUrl.getTodayStatus, method: 'get', headers: {Cookie: cookie}});
+    if (data.err_no) {
+        await sendEmailFromQQ('今日掘金签到查询：失败', JSON.stringify(data));
+    }
     return {error: data.err_no !== 0, isCheck: data.data}
 }
 
@@ -50,8 +37,14 @@ const checkIn = async () => {
     if (isCheck) return log('今日已参与签到', true);
     const {cookie, baseUrl, apiUrl} = getConfig();
     let {data} = await axios({url: baseUrl + apiUrl.checkIn, method: 'post', headers: {Cookie: cookie}});
-    if (data.err_no) return log('签到失败', true);
-    log(`签到成功！当前积分：${data.data.sum_point}`);
+    if (data.err_no) {
+        log('签到失败', true);
+        await sendEmailFromQQ('今日掘金签到：失败', JSON.stringify(data));
+    } else {
+        log(`签到成功！当前积分：${data.data.sum_point}`);
+        await sendEmailFromQQ('今日掘金签到：成功', JSON.stringify(data));
+    }
+
 }
 
 module.exports = {

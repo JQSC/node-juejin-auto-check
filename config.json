@@ -6,5 +6,13 @@
     "getLotteryConfig": "/growth_api/v1/lottery_config/get",
     "drawLottery": "/growth_api/v1/lottery/draw"
   },
-  "cookie": ""
+  "cookie": "",
+  "email": {
+    "qq": {
+      "user": "416556102@qq.com",
+      "from": "416556102@qq.com",
+      "to": "416556102@qq.com",
+      "pass": ""
+    }
+  }
 }

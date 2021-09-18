@@ -1,7 +1,10 @@
 {
   "baseUrl": "https://api.juejin.cn",
   "apiUrl": {
-    "checkIn": "/growth_api/v1/check_in"
+    "getTodayStatus": "/growth_api/v1/get_today_status",
+    "checkIn": "/growth_api/v1/check_in",
+    "getLotteryConfig": "/growth_api/v1/lottery_config/get",
+    "drawLottery": "/growth_api/v1/lottery/draw"
   },
   "cookie": ""
 }

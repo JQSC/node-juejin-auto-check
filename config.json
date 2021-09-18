@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://api.juejin.cn",
+  "apiUrl": {
+    "checkIn": "/growth_api/v1/check_in"
+  },
+  "cookie": ""
+}

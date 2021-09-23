@@ -1,4 +1,4 @@
-# 掘金自动签到&抽奖
+# 掘金自动签到&免费抽奖&邮件提醒
 
 ## 实现
 
@@ -27,7 +27,7 @@
 }
 ```
 
-### 2、安装pm2
+### 3、安装pm2
 ```shell
 npm install -g pm2
 ```
@@ -37,3 +37,7 @@ npm install -g pm2
 ```shell
 pm2 start index.js --name ***
 ```
+
+## 云函数版
+
+传送门：https://juejin.cn/post/7011025504186662949

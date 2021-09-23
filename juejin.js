@@ -6,7 +6,11 @@ const {sendEmailFromQQ} = require('./email.js')
 const getTodayDrawStatus = async () => {
     const {cookie, baseUrl, apiUrl} = getConfig();
     let {data} = await axios({url: baseUrl + apiUrl.getLotteryConfig, method: 'get', headers: {Cookie: cookie}});
-    return {error: data.err_no !== 0, isDraw: data?.data?.free_count === 0};
+    if (data.err_no) {
+        return {error: true, isDraw: false}
+    } else {
+        return {error: false, isDraw: data.data.free_count === 0}
+    }
 }
 
 // 抽奖
